@@ -3,7 +3,6 @@ package gui.Principal;
 import javax.swing.*;
 
 public class frmPrincipal {
-    private JPanel panel1;
     private JPanel jpaPrincipal;
     private JPanel jpaTitulo;
     private JLabel lblTitulo;
