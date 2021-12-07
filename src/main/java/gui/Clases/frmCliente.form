@@ -7,6 +7,7 @@
     </constraints>
     <properties>
       <background color="-20596"/>
+      <foreground color="-20596"/>
     </properties>
     <border type="none"/>
     <children>
@@ -17,6 +18,7 @@
         </constraints>
         <properties>
           <background color="-20596"/>
+          <foreground color="-20596"/>
         </properties>
         <border type="none"/>
         <children>
@@ -27,6 +29,7 @@
             </constraints>
             <properties>
               <background color="-20596"/>
+              <foreground color="-20596"/>
             </properties>
             <border type="none"/>
             <children>
@@ -49,6 +52,7 @@
             </constraints>
             <properties>
               <background color="-20596"/>
+              <foreground color="-20596"/>
             </properties>
             <border type="none"/>
             <children>
@@ -203,6 +207,7 @@
             </constraints>
             <properties>
               <background color="-20596"/>
+              <foreground color="-20596"/>
             </properties>
             <border type="none"/>
             <children>
@@ -257,7 +262,10 @@
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-20596"/>
+              <foreground color="-20596"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="2a4d5" class="javax.swing.JTable" binding="tblDatos">
