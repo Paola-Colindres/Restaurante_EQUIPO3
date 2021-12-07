@@ -3,11 +3,9 @@ package gui.Principal;
 import javax.swing.*;
 
 public class frmPrincipal {
-    private JPanel jpaPrincipal;
     private JPanel jpaTitulo;
     private JLabel lblTitulo;
     private JPanel jpaBotones;
-    private JButton btnOrdenes;
     private JButton btnReservacion;
     private JButton btnSucursal;
     private JButton btnPuesto;
@@ -17,4 +15,7 @@ public class frmPrincipal {
     private JButton btnEmpleado;
     private JButton btnSalir;
     private JButton btnFactura;
+    private JPanel jpaPrincipal;
+    private JPanel jpaSalir;
+    private JButton btnOrdenes;
 }

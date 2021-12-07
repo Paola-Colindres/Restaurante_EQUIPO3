@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.Principal.frmLogin">
   <grid id="27dc6" binding="jpaPrincipal" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="25" left="20" bottom="25" right="20"/>
+    <margin top="45" left="40" bottom="45" right="40"/>
     <constraints>
       <xy x="20" y="20" width="549" height="400"/>
     </constraints>

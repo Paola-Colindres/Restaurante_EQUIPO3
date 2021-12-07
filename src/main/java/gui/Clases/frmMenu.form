@@ -26,7 +26,6 @@
             </constraints>
             <properties>
               <font name="Monospaced" size="28" style="2"/>
-              <icon value="recursos/imagenes/icono-menu.png"/>
               <text value="Menú"/>
             </properties>
           </component>
