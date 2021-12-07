@@ -26,6 +26,7 @@
             </constraints>
             <properties>
               <font name="Monospaced" size="28" style="1"/>
+              <icon value="recursos/imagenes/icono-ordenes.png"/>
               <text value="Órdenes"/>
             </properties>
           </component>
