@@ -47,8 +47,6 @@ public class frmOrdenes {
     private JLabel lblPostre;
     private JLabel lblPrecio;
     private JPanel jpaBotones;
-    private JPanel jpaIcono;
-    private JLabel lblIcono;
     private JPanel jpaTitulo;
     private JButton btnLeerCombo;
     private JComboBox cboOrden;
@@ -537,7 +535,7 @@ public class frmOrdenes {
         ImageIcon imagen7 = new ImageIcon("icono-obtener.png");
         ImageIcon imagen8 = new ImageIcon("icono-calcular.png");
 
-        lblIcono.setIcon(imagen1);
+        lblTitulo.setIcon(imagen1);
         btnAgregar.setIcon(imagen2);
         btnActualizar.setIcon(imagen3);
         btnEliminar.setIcon(imagen4);
