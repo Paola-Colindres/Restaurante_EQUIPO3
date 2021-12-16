@@ -548,6 +548,8 @@ public class frmOrdenes {
     String respuesta         = "";
     static final String URL  = "http://192.168.1.12:8080/api/v1/ordenes";
     static final String URL2 = "http://192.168.1.12:8080/api/v1/menu";
+    //static final String URL = "http://192.168.108.214:8080/api/v1/ordenes";
+    //static final String URL2 = "http://192.168.108.214:8080/api/v1/menu";
     public static void main() {
         JFrame frame = new JFrame("Ordenes");
         frame.setContentPane(new frmOrdenes().jpaPrincipal);

@@ -527,6 +527,10 @@ public class frmFactura {
     static final String URL2 = "http://192.168.1.12:8080/api/v1/clientes";
     static final String URL3 = "http://192.168.1.12:8080/api/v1/empleados";
     static final String URL4 = "http://192.168.1.12:8080/api/v1/ordenes";
+    //static final String URL = "http://192.168.108.214:8080/api/v1/facturas";
+    //static final String URL2 = "http://192.168.108.214:8080/api/v1/clientes";
+    //static final String URL3 = "http://192.168.108.214:8080/api/v1/empleados";
+    //static final String URL4 = "http://192.168.108.214:8080/api/v1/ordenes";
     public static void main() {
         JFrame frame = new JFrame("Factura");
         frame.setContentPane(new frmFactura().jpaPrincipal);

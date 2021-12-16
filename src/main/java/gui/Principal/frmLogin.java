@@ -85,6 +85,7 @@ public class frmLogin {
     }
 
     static final String URL = "http://192.168.1.12:8080/api/v1/usuarios";
+    //static final String URL = "http://192.168.108.214:8080/api/v1/usuarios";
     public static void main(String[] args) {
         JFrame frame = new JFrame("Login");
         frame.setContentPane(new frmLogin().jpaPrincipal);

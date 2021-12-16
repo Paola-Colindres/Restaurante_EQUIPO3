@@ -425,6 +425,7 @@ public class frmPuesto {
 
     String respuesta        = "";
     static final String URL = "http://192.168.1.12:8080/api/v1/puestos";
+    //static final String URL = "http://192.168.108.214:8080/api/v1/puestos";
     public static void main() {
         JFrame frame = new JFrame("Puesto");
         frame.setContentPane(new frmPuesto().jpaPrincipal);

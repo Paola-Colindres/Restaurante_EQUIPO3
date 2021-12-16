@@ -393,6 +393,7 @@ public class frmUsuario {
 
     String respuesta = "";
     static final String URL = "http://192.168.1.12:8080/api/v1/usuarios";
+    //static final String URL = "http://192.168.108.214:8080/api/v1/usuarios";
     public static void main() {
         JFrame frame = new JFrame("Usuario");
         frame.setContentPane(new frmUsuario().jpaPrincipal);

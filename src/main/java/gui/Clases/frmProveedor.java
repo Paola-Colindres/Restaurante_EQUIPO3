@@ -424,6 +424,7 @@ public class frmProveedor {
 
     String respuesta        = "";
     static final String URL = "http://192.168.1.12:8080/api/v1/proveedores";
+    //static final String URL = "http://192.168.108.214:8080/api/v1/proveedores";
     public static void main() {
         JFrame frame = new JFrame("Proveedor");
         frame.setContentPane(new frmProveedor().jpaPrincipal);
