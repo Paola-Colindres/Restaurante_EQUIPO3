@@ -7,7 +7,7 @@ public class Factura {
     private String cliente;
     private String empleado;
     private String orden;
-    private Date   fecha;
+    private String fecha;
     private int    cantidadOrden;
     private String tipoPago;
     private double totalPagar;
@@ -38,10 +38,10 @@ public class Factura {
     public void setOrden(String orden) {
         this.orden = orden;
     }
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
     public int getCantidadOrden() {

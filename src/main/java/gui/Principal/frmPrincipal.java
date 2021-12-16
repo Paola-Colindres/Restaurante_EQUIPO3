@@ -70,6 +70,18 @@ public class frmPrincipal {
                 frmFactura.main();
             }
         });
+        btnCliente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmCliente.main();
+            }
+        });
+        btnEmpleado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmEmpleado.main();
+            }
+        });
     }
 
     private void iniciar() {

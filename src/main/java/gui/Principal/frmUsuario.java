@@ -82,7 +82,6 @@ public class frmUsuario {
                             break;
                     }
 
-
                 } catch (Exception ex) {
                     respuesta = e.toString();
                 }
@@ -115,22 +114,21 @@ public class frmUsuario {
 
                     switch (put.getStatus()) {
                         case 200:
+                            respuesta = "Actualizado";
                             leerDatos();
                             llenarComboUsuario();
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
-                    if (put.getStatus() == 404) {
-                        RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
-                    }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null, respuesta);
                     cliente.close();
                 }
 

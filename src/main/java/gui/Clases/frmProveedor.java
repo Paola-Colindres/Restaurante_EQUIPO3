@@ -65,7 +65,7 @@ public class frmProveedor {
                     Invocation.Builder solicitud = target.request();
                     Proveedor proveedor = new Proveedor();
                     proveedor.setNombre(txtNombre.getText());
-                    proveedor.setFechaContrato(convertirFormatoTextoFecha(txtFechaContrato.getText()));
+                    proveedor.setFechaContrato(txtFechaContrato.getText());
                     proveedor.setRtn(Long.parseLong(txtRtn.getText()));
                     proveedor.setCiudad(txtCiudad.getText());
                     proveedor.setDireccion(txtDireccion.getText());
@@ -113,7 +113,7 @@ public class frmProveedor {
                     id = JOptionPane.showInputDialog("¿Cual es su ID?");
                     proveedor.setId(Long.parseLong(id));
                     proveedor.setNombre(txtNombre.getText());
-                    proveedor.setFechaContrato(convertirFormatoTextoFecha(txtFechaContrato.getText()));
+                    proveedor.setFechaContrato(txtFechaContrato.getText());
                     proveedor.setRtn(Long.parseLong(txtRtn.getText()));
                     proveedor.setCiudad(txtCiudad.getText());
                     proveedor.setDireccion(txtDireccion.getText());
@@ -126,22 +126,25 @@ public class frmProveedor {
 
                     switch (put.getStatus()) {
                         case 200:
+                            respuesta = "Actualizado";
                             leerDatos();
                             llenarComboProveedor();
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
                     if (put.getStatus() == 404) {
                         RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
+                        respuesta = apiError.getErrorDetails();
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null, respuesta);
                     cliente.close();
                 }
             }
@@ -317,12 +320,6 @@ public class frmProveedor {
                 txtTelefono.setText(modelo.getValueAt(filaSeleccionada, 7).toString());
             }
         });
-        txtFechaContrato.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-
-            }
-        });
     }
 
     private void iniciar() {
@@ -393,16 +390,6 @@ public class frmProveedor {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    private Date convertirFormatoTextoFecha(String textoFecha) {
-        Date fecha = null;
-        try {
-            fecha = sdf.parse(textoFecha);
-        } catch (ParseException pe) {
-            JOptionPane.showMessageDialog(null, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return fecha;
     }
 
     private void limpiar() {

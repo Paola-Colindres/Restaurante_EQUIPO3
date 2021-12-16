@@ -71,7 +71,7 @@ public class frmEmpleado {
                     empleado.setDni(Long.parseLong(txtDNI.getText()));
                     empleado.setSueldo(Double.parseDouble(txtSueldo.getText()));
                     empleado.setSucursal(cboSucursal.getSelectedItem().toString());
-                    empleado.setFechaIngreso(new Date(txtFechaIngreso.getText()));
+                    empleado.setFechaIngreso(txtFechaIngreso.getText());
                     empleado.setGenero(cboGenero.getSelectedItem().toString());
                     empleado.setEdad(Integer.parseInt(txtEdad.getText()));
                     empleado.setHorasExtra(Integer.parseInt(txtHorasExtra.getText()));
@@ -171,7 +171,7 @@ public class frmEmpleado {
                     empleado.setDni(Long.parseLong(txtDNI.getText()));
                     empleado.setSueldo(Double.parseDouble(txtSueldo.getText()));
                     empleado.setSucursal(cboSucursal.getSelectedItem().toString());
-                    empleado.setFechaIngreso(new Date(txtFechaIngreso.getText()));
+                    empleado.setFechaIngreso(txtFechaIngreso.getText());
                     empleado.setGenero(cboGenero.getSelectedItem().toString());
                     empleado.setEdad(Integer.parseInt(txtEdad.getText()));
                     empleado.setHorasExtra(Integer.parseInt(txtHorasExtra.getText()));
@@ -189,7 +189,8 @@ public class frmEmpleado {
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
                     if (put.getStatus() == 404) {
@@ -295,7 +296,7 @@ public class frmEmpleado {
                 try {
                     Client client = ClientBuilder.newClient();
                     String nombre;
-                    nombre = JOptionPane.showInputDialog("¿Cual es el Nombre del Proveedor?");
+                    nombre = JOptionPane.showInputDialog("¿Cual es el Nombre del Empleado?");
                     WebTarget target = client.target(URL + "/nombre/" + nombre);
                     Invocation.Builder solicitud = target.request();
                     Response get = solicitud.get();
@@ -442,13 +443,14 @@ public class frmEmpleado {
         btnBuscarNombre.setIcon(imagen7);
     }
 
-    String URL = "http://192.168.108.214:8080/api/v1/empleados";
+    //String URL = "http://192.168.108.214:8080/api/v1/empleados";
+    static final String URL = "http://192.168.1.12:8080/api/v1/empleados";
     String respuesta = "";
-    public static void main(String[] args) {
+    public static void main() {
         JFrame frame = new JFrame("Empleado");
         frame.setResizable(false);
         frame.setContentPane(new frmEmpleado().jpaPrincipal);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         ImageIcon imagen = new ImageIcon("src/main/java/recursos/imagenes/icono-empleado.png");
         frame.setIconImage(new ImageIcon(imagen.getImage()).getImage());

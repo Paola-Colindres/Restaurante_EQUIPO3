@@ -127,22 +127,22 @@ public class frmMenu {
 
                     switch (put.getStatus()) {
                         case 200:
+                            respuesta = "Actualizado";
                             leerDatos();
                             llenarComboMenu();
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
-                    if (put.getStatus() == 404) {
-                        RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
-                    }
+
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null, respuesta);
                     cliente.close();
                 }
             }

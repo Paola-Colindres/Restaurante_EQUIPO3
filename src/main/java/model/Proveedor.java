@@ -5,7 +5,7 @@ import java.util.Date;
 public class Proveedor {
     private long   id;
     private String nombre;
-    private Date fechaContrato;
+    private String fechaContrato;
     private long   rtn;
     private String ciudad;
     private String direccion;
@@ -26,10 +26,10 @@ public class Proveedor {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public Date getFechaContrato() {
+    public String getFechaContrato() {
         return fechaContrato;
     }
-    public void setFechaContrato(Date fechaContrato) {
+    public void setFechaContrato(String fechaContrato) {
         this.fechaContrato = fechaContrato;
     }
     public long getRtn() {

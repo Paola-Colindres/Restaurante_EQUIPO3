@@ -125,7 +125,8 @@ public class frmCliente {
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
                     if (put.getStatus() == 404) {
@@ -133,9 +134,10 @@ public class frmCliente {
                         throw new Exception(apiError.getErrorDetails());
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null, respuesta);
                     client.close();
                 }
             }
@@ -274,7 +276,7 @@ public class frmCliente {
                 try {
                     Client client = ClientBuilder.newClient();
                     String nombre;
-                    nombre = JOptionPane.showInputDialog("¿Cual es el Nombre del Proveedor?");
+                    nombre = JOptionPane.showInputDialog("¿Cual es el Nombre del Cliente?");
                     WebTarget target = client.target(URL + "/nombre/" + nombre);
                     Invocation.Builder solicitud = target.request();
                     Response get = solicitud.get();
@@ -414,9 +416,10 @@ public class frmCliente {
         btnBuscarNombre.setIcon(imagen7);
     }
 
-    String URL = "http://192.168.108.214:8080/api/v1/clientes";
+    //String URL = "http://192.168.108.214:8080/api/v1/clientes";
+    static final String URL = "http://192.168.1.12:8080/api/v1/clientes";
     String respuesta = "";
-    public static void main(String[] args) {
+    public static void main() {
         JFrame frame = new JFrame("Cliente");
         frame.setContentPane(new frmCliente().jpaPrincipal);
         frame.setResizable(false);

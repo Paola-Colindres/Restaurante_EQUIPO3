@@ -8,7 +8,7 @@ public class Empleado {
     private long   dni;
     private double sueldo;
     private String sucursal;
-    private Date   fechaIngreso;
+    private String fechaIngreso;
     private String genero;
     private int    edad;
     private int    horasExtra;
@@ -46,10 +46,10 @@ public class Empleado {
     public void setSucursal(String sucursal) {
         this.sucursal = sucursal;
     }
-    public Date getFechaIngreso() {
+    public String getFechaIngreso() {
         return fechaIngreso;
     }
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(String fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
     public String getGenero() {

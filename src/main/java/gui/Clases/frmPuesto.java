@@ -2,6 +2,7 @@ package gui.Clases;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import jdk.nashorn.internal.scripts.JO;
 import model.Puesto;
 import model.RestApiError;
 import model.Usuario;
@@ -68,7 +69,7 @@ public class frmPuesto {
                     puesto.setEstudioMinimo(txtEstudioMinimo.getText());
                     puesto.setCantidadEmpleados(Integer.parseInt(txtCantEmpleados.getText()));
                     puesto.setUsoUniforme(cboUniforme.getSelectedItem().toString());
-                    puesto.setFechaInicio(convertirFormatoTextoFecha(txtFechaInicio.getText()));
+                    puesto.setFechaInicio(txtFechaInicio.getText());
                     puesto.setDescripcion(txtDescripcion.getText());
                     puesto.setExperiencia(txtExperiencia.getText());
                     Gson gson = new Gson();
@@ -116,7 +117,7 @@ public class frmPuesto {
                     puesto.setEstudioMinimo(txtEstudioMinimo.getText());
                     puesto.setCantidadEmpleados(Integer.parseInt(txtCantEmpleados.getText()));
                     puesto.setUsoUniforme(cboUniforme.getSelectedItem().toString());
-                    puesto.setFechaInicio(convertirFormatoTextoFecha(txtFechaInicio.getText()));
+                    puesto.setFechaInicio(txtFechaInicio.getText());
                     puesto.setDescripcion(txtDescripcion.getText());
                     puesto.setExperiencia(txtExperiencia.getText());
                     Gson gson = new Gson();
@@ -126,22 +127,25 @@ public class frmPuesto {
 
                     switch (put.getStatus()) {
                         case 200:
+                            respuesta = "Actualizado";
                             leerDatos();
                             llenarComboPuesto();
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
                     if (put.getStatus() == 404) {
                         RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
+                        respuesta = apiError.getErrorDetails();
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                   respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null, respuesta);
                     cliente.close();
                 }
             }
@@ -303,17 +307,6 @@ public class frmPuesto {
                 }
             }
         });
-        txtFechaInicio.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) )) {
-                    JOptionPane.showMessageDialog(null, "Porfavor ingrese una fecha correcta.");
-                    e.consume();
-                    //super.keyTyped(e);
-                }
-            }
-        });
         tblDatos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -400,15 +393,6 @@ public class frmPuesto {
         }
     }
 
-    private Date convertirFormatoTextoFecha(String textoFecha) {
-        Date fecha = null;
-        try {
-            fecha = sdf.parse(textoFecha);
-        } catch (ParseException pe) {
-            JOptionPane.showMessageDialog(null, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return fecha;
-    }
 
     private void limpiar() {
         txtID.setText("");

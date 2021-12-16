@@ -8,7 +8,7 @@ public class Puesto {
     private String estudioMinimo;
     private int    cantidadEmpleados;
     private String usoUniforme;
-    private Date   fechaInicio;
+    private String fechaInicio;
     private String descripcion;
     private String experiencia;
 
@@ -44,10 +44,10 @@ public class Puesto {
     public void setUsoUniforme(String usoUniforme) {
         this.usoUniforme = usoUniforme;
     }
-    public Date getFechaInicio() {
+    public String getFechaInicio() {
         return fechaInicio;
     }
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
     public String getDescripcion() {

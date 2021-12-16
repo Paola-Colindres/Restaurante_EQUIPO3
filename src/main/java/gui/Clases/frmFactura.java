@@ -2,10 +2,8 @@ package gui.Clases;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import model.Factura;
-import model.Orden;
-import model.Puesto;
-import model.RestApiError;
+import com.sun.org.apache.xpath.internal.operations.Or;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -51,6 +49,7 @@ public class frmFactura {
     private JComboBox cboFactura;
     private JLabel lblComboFactura;
     private JButton btnBuscarCliente;
+    private JButton btnCalcular;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
     DefaultTableModel modelo;
 
@@ -68,7 +67,7 @@ public class frmFactura {
                     factura.setCliente(cboCliente.getSelectedItem().toString());
                     factura.setEmpleado(cboEmpleado.getSelectedItem().toString());
                     factura.setOrden(cboOrden.getSelectedItem().toString());
-                    factura.setFecha(convertirFormatoTextoFecha(txtFecha.getText()));
+                    factura.setFecha(txtFecha.getText());
                     factura.setCantidadOrden(Integer.parseInt(txtCantOrden.getText()));
                     factura.setTipoPago(txtTipoPago.getText());
                     factura.setTotalPagar(Double.parseDouble(txtTotalPagar.getText()));
@@ -116,7 +115,7 @@ public class frmFactura {
                     factura.setCliente(cboCliente.getSelectedItem().toString());
                     factura.setEmpleado(cboEmpleado.getSelectedItem().toString());
                     factura.setOrden(cboOrden.getSelectedItem().toString());
-                    factura.setFecha(convertirFormatoTextoFecha(txtFecha.getText()));
+                    factura.setFecha(txtFecha.getText());
                     factura.setCantidadOrden(Integer.parseInt(txtCantOrden.getText()));
                     factura.setTipoPago(txtTipoPago.getText());
                     factura.setTotalPagar(Double.parseDouble(txtTotalPagar.getText()));
@@ -127,22 +126,21 @@ public class frmFactura {
 
                     switch (put.getStatus()) {
                         case 200:
+                            respuesta = "Actualizado";
                             leerDatos();
                             llenarComboFactura();
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
-                    if (put.getStatus() == 404) {
-                        RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
-                    }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null,respuesta);
                     cliente.close();
                 }
             }
@@ -318,10 +316,36 @@ public class frmFactura {
                 txtTotalPagar.setText(modelo.getValueAt(filaSeleccionada, 7).toString());
             }
         });
-        txtFecha.addKeyListener(new KeyAdapter() {
+        btnCalcular.addActionListener(new ActionListener() {
             @Override
-            public void keyTyped(KeyEvent e) {
-
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (Integer.parseInt(txtCantOrden.getText()) <= 0)
+                        throw new Exception("La cantidad de orden no debe ser <= 0");
+                    Client cliente = ClientBuilder.newClient();
+                    String plato = cboOrden.getSelectedItem().toString();
+                    WebTarget target = cliente.target(URL4 + "/plato/" + plato);
+                    Invocation.Builder solicitud = target.request();
+                    Response get = solicitud.get();
+                    String responseJson = get.readEntity(String.class);
+                    Orden data = new Gson().fromJson(responseJson, Orden.class);
+                    switch (get.getStatus()) {
+                        case 200:
+                            double totalPagar = data.getPrecioTotal() * Integer.parseInt(txtCantOrden.getText());
+                            txtTotalPagar.setText(String.valueOf(totalPagar));
+                            break;
+                        default:
+                            respuesta = "Error";
+                            break;
+                    }
+                    if (get.getStatus() == 404) {
+                        RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                        throw new Exception(apiError.getErrorDetails());
+                    }
+                    cliente.close();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -378,7 +402,22 @@ public class frmFactura {
 
     private void llenarComboCliente() {
         try {
-            //falta cliente
+            Client cliente = ClientBuilder.newClient();
+            WebTarget target = cliente.target(URL2 + "");
+            Invocation.Builder solicitud = target.request();
+            Response get = solicitud.get();
+            String responseJson = get.readEntity(String.class);
+            List<Cliente> data = new Gson().fromJson(responseJson, new TypeToken<List<Cliente>>(){}.getType());
+            if (get.getStatus() == 200) {
+                DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+                for (Cliente cliente1: data) {
+                    modeloCombo.addElement(cliente1.getNombre());
+                }
+                cboCliente.setModel(modeloCombo);
+            } else {
+                throw new Exception("Error: no se cargaron los datos.");
+            }
+            cliente.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -386,7 +425,22 @@ public class frmFactura {
 
     private void llenarComboEmpleado() {
         try {
-            //falta empleado
+            Client cliente = ClientBuilder.newClient();
+            WebTarget target = cliente.target(URL3 + "");
+            Invocation.Builder solicitud = target.request();
+            Response get = solicitud.get();
+            String responseJson = get.readEntity(String.class);
+            List<Empleado> data = new Gson().fromJson(responseJson, new TypeToken<List<Empleado>>(){}.getType());
+            if (get.getStatus() == 200) {
+                DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+                for (Empleado empleado: data) {
+                    modeloCombo.addElement(empleado.getNombre());
+                }
+                cboEmpleado.setModel(modeloCombo);
+            } else {
+                throw new Exception("Error: no se cargaron los datos.");
+            }
+            cliente.close();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -438,15 +492,6 @@ public class frmFactura {
         }
     }
 
-    private Date convertirFormatoTextoFecha(String textoFecha) {
-        Date fecha = null;
-        try {
-            fecha = sdf.parse(textoFecha);
-        } catch (ParseException pe) {
-            JOptionPane.showMessageDialog(null, pe.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return fecha;
-    }
 
     private void limpiar() {
         txtID.setText("");
@@ -464,6 +509,7 @@ public class frmFactura {
         ImageIcon imagen5 = new ImageIcon("icono-listar.png");
         ImageIcon imagen6 = new ImageIcon("icono-leer.png");
         ImageIcon imagen7 = new ImageIcon("icono-obtener.png");
+        ImageIcon imagen8 = new ImageIcon("icono-calcular.png");
 
         lblTitulo.setIcon(imagen1);
         btnRegistrar.setIcon(imagen2);
@@ -473,7 +519,7 @@ public class frmFactura {
         btnLeerCombo.setIcon(imagen6);
         btnBuscarID.setIcon(imagen7);
         btnBuscarCliente.setIcon(imagen7);
-
+        btnCalcular.setIcon(imagen8);
     }
 
     String respuesta         = "";
