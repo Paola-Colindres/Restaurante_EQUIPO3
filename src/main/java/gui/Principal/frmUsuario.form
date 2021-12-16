@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.Principal.frmUsuario">
-  <grid id="27dc6" binding="jpaPrincipal" layout-manager="GridLayoutManager" row-count="5" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="jpaPrincipal" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="25" left="20" bottom="25" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="918" height="702"/>
+      <xy x="13" y="20" width="925" height="702"/>
     </constraints>
     <properties>
       <background color="-32638"/>
@@ -26,7 +26,6 @@
             </constraints>
             <properties>
               <font name="Monospaced" size="22" style="1"/>
-              <icon value="recursos/imagenes/icono-registroUsuario.png"/>
               <text value="Registrar Usuario"/>
             </properties>
           </component>
@@ -44,7 +43,7 @@
         <children>
           <component id="9aa6a" class="javax.swing.JTextField" binding="txtUsuario">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -52,15 +51,7 @@
           </component>
           <component id="bf425" class="javax.swing.JTextField" binding="txtCorreo">
             <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="95c5c" class="javax.swing.JTextField" binding="txtActivo">
-            <constraints>
-              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -74,19 +65,16 @@
             </constraints>
             <properties/>
           </component>
-          <component id="7df03" class="javax.swing.JPasswordField" binding="txtRepeatPassword">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
           <component id="a918b" class="javax.swing.JComboBox" binding="cboRol">
             <constraints>
-              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <model>
+                <item value="Cliente"/>
+                <item value="Empleado"/>
+              </model>
+            </properties>
           </component>
           <component id="5c296" class="javax.swing.JTextField" binding="txtID">
             <constraints>
@@ -94,7 +82,9 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <enabled value="false"/>
+            </properties>
           </component>
           <component id="c668e" class="javax.swing.JLabel" binding="lblID">
             <constraints>
@@ -120,17 +110,9 @@
               <text value="Contraseña:"/>
             </properties>
           </component>
-          <component id="4713a" class="javax.swing.JLabel" binding="lblRepetirPassword">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Repita Contraseña:"/>
-            </properties>
-          </component>
           <component id="7ca37" class="javax.swing.JLabel" binding="lblCorreo">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Correo:"/>
@@ -138,7 +120,7 @@
           </component>
           <component id="5f9d8" class="javax.swing.JLabel" binding="lblRol">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Rol:"/>
@@ -146,10 +128,53 @@
           </component>
           <component id="afd9e" class="javax.swing.JLabel" binding="lblActivo">
             <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Usuario Activo:"/>
+            </properties>
+          </component>
+          <component id="e1484" class="javax.swing.JLabel" binding="lblUsuarioCombo">
+            <constraints>
               <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Activo:"/>
+              <text value="Usuario:"/>
+            </properties>
+          </component>
+          <component id="d3a58" class="javax.swing.JComboBox" binding="cboUsuario">
+            <constraints>
+              <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model/>
+            </properties>
+          </component>
+          <component id="4649d" class="javax.swing.JButton" binding="btnBuscarID">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Buscar"/>
+            </properties>
+          </component>
+          <component id="dba0d" class="javax.swing.JButton" binding="btnBuscarNombre">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Buscar"/>
+            </properties>
+          </component>
+          <component id="20e8c" class="javax.swing.JComboBox" binding="cboActivo">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="Si"/>
+                <item value="No"/>
+              </model>
             </properties>
           </component>
         </children>
@@ -169,54 +194,39 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-registrarUsuario.png"/>
               <text value="Registrar"/>
             </properties>
           </component>
-          <component id="af4f8" class="javax.swing.JButton" binding="btnCancelar">
+          <component id="afdd2" class="javax.swing.JButton" binding="btnListar">
             <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <background color="-4510675"/>
-              <icon value="recursos/imagenes/icono-cancelar.png"/>
-              <text value="Cancelar"/>
-            </properties>
-          </component>
-          <component id="4649d" class="javax.swing.JButton" binding="btnObtenerTodos">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <icon value="recursos/imagenes/icono-obtener35.png"/>
-              <text value="Obtener Todos"/>
-            </properties>
-          </component>
-          <component id="afdd2" class="javax.swing.JButton" binding="btnObtenerID">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <icon value="recursos/imagenes/icono-ID35.png"/>
-              <text value="Obtener ID"/>
+              <text value="Listar"/>
             </properties>
           </component>
           <component id="9346" class="javax.swing.JButton" binding="btnActualizar">
             <constraints>
-              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-actualizar35.png"/>
               <text value="Actualizar"/>
             </properties>
           </component>
           <component id="4a428" class="javax.swing.JButton" binding="btnEliminar">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-eliminar35.png"/>
               <text value="Eliminar"/>
+            </properties>
+          </component>
+          <component id="2375b" class="javax.swing.JButton" binding="btnLeerCombo">
+            <constraints>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Leer Combo"/>
             </properties>
           </component>
         </children>

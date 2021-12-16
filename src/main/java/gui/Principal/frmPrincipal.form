@@ -7,9 +7,12 @@
     </constraints>
     <properties>
       <background color="-20596"/>
-      <foreground color="-20596"/>
+      <foreground color="-16777216"/>
     </properties>
-    <border type="none"/>
+    <border type="none">
+      <font/>
+      <title-color color="-16777216"/>
+    </border>
     <children>
       <grid id="f5b23" binding="jpaTitulo" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="25" left="20" bottom="25" right="20"/>
@@ -48,7 +51,6 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-reservaciones.png"/>
               <text value="Reservación"/>
             </properties>
           </component>
@@ -57,7 +59,6 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-sucursal.png"/>
               <text value="Sucursal"/>
             </properties>
           </component>
@@ -66,7 +67,6 @@
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-puesto30.png"/>
               <text value="Puesto"/>
             </properties>
           </component>
@@ -75,7 +75,6 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-cliente.png"/>
               <text value="Cliente"/>
             </properties>
           </component>
@@ -84,7 +83,6 @@
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-empleado.png"/>
               <text value="Empleado"/>
             </properties>
           </component>
@@ -101,7 +99,6 @@
               <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-factura.png"/>
               <text value="Factura"/>
             </properties>
           </component>
@@ -110,7 +107,6 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-orden.png"/>
               <text value="Ordenes"/>
             </properties>
           </component>
@@ -119,7 +115,6 @@
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/icono-menu30.png"/>
               <text value="Menu"/>
             </properties>
           </component>
@@ -140,7 +135,6 @@
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <icon value="recursos/imagenes/salir-40.png"/>
               <text value="Salir"/>
             </properties>
           </component>
