@@ -131,7 +131,7 @@ public class frmCliente {
                     }
                     if (put.getStatus() == 404) {
                         RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
+                        respuesta = apiError.getErrorDetails();
                     }
                 } catch (Exception ex) {
                     respuesta = ex.toString();

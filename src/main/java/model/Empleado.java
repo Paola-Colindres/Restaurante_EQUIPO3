@@ -11,7 +11,7 @@ public class Empleado {
     private String fechaIngreso;
     private String genero;
     private int    edad;
-    private int    horasExtra;
+    private int    horas;
     private double precioHora;
 
     public Empleado(){super();}
@@ -64,11 +64,11 @@ public class Empleado {
     public void setEdad(int edad) {
         this.edad = edad;
     }
-    public int getHorasExtra() {
-        return horasExtra;
+    public int getHoras() {
+        return horas;
     }
-    public void setHorasExtra(int horasExtra) {
-        this.horasExtra = horasExtra;
+    public void setHoras(int horas) {
+        this.horas = horas;
     }
     public double getPrecioHora() {
         return precioHora;

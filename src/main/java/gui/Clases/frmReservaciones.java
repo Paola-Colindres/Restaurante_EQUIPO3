@@ -105,7 +105,7 @@ public class frmReservaciones {
         tblDatos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
+                //super.mouseClicked(e);
                 int filaSeleccionada = tblDatos.getSelectedRow();
                 txtId.setText(modelo.getValueAt(filaSeleccionada, 0).toString());
                 cboCliente.setToolTipText(modelo.getValueAt(filaSeleccionada, 1).toString());
@@ -148,12 +148,13 @@ public class frmReservaciones {
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
                     if (put.getStatus() == 404) {
                         RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
+                        respuesta = apiError.getErrorDetails();
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());

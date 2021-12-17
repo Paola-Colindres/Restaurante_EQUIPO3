@@ -2,9 +2,7 @@ package gui.Clases;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import model.Cliente;
-import model.Empleado;
-import model.RestApiError;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -74,7 +72,7 @@ public class frmEmpleado {
                     empleado.setFechaIngreso(txtFechaIngreso.getText());
                     empleado.setGenero(cboGenero.getSelectedItem().toString());
                     empleado.setEdad(Integer.parseInt(txtEdad.getText()));
-                    empleado.setHorasExtra(Integer.parseInt(txtHorasExtra.getText()));
+                    empleado.setHoras(Integer.parseInt(txtHorasExtra.getText()));
                     empleado.setPrecioHora(Double.parseDouble(txtPrecioHora.getText()));
                     Gson gson = new Gson();
                     String jsonString = gson.toJson(empleado);
@@ -141,15 +139,14 @@ public class frmEmpleado {
         tblDatos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
                 int filaSeleccionada = tblDatos.getSelectedRow();
                 txtID.setText(modelo.getValueAt(filaSeleccionada, 0).toString());
                 txtNombre.setText(modelo.getValueAt(filaSeleccionada, 1).toString());
                 txtDNI.setText(modelo.getValueAt(filaSeleccionada, 2).toString());
                 txtSueldo.setText(modelo.getValueAt(filaSeleccionada, 3).toString());
-                cboSucursal.setToolTipText(modelo.getValueAt(filaSeleccionada, 4).toString());
+                cboSucursal.setSelectedItem(modelo.getValueAt(filaSeleccionada, 4).toString());
                 txtFechaIngreso.setText(modelo.getValueAt(filaSeleccionada, 5).toString());
-                cboGenero.setToolTipText(modelo.getValueAt(filaSeleccionada, 6).toString());
+                cboGenero.setSelectedItem(modelo.getValueAt(filaSeleccionada, 6).toString());
                 txtEdad.setText(modelo.getValueAt(filaSeleccionada, 7).toString());
                 txtHorasExtra.setText(modelo.getValueAt(filaSeleccionada, 8).toString());
                 txtPrecioHora.setText(modelo.getValueAt(filaSeleccionada, 9).toString());
@@ -162,7 +159,6 @@ public class frmEmpleado {
                 try {
                     WebTarget target = client.target(URL + "");
                     Invocation.Builder solicitud = target.request();
-                    Cliente cliente = new Cliente();
                     String id;
                     id = JOptionPane.showInputDialog("¿Cual es su ID?");
                     Empleado empleado = new Empleado();
@@ -174,10 +170,10 @@ public class frmEmpleado {
                     empleado.setFechaIngreso(txtFechaIngreso.getText());
                     empleado.setGenero(cboGenero.getSelectedItem().toString());
                     empleado.setEdad(Integer.parseInt(txtEdad.getText()));
-                    empleado.setHorasExtra(Integer.parseInt(txtHorasExtra.getText()));
+                    empleado.setHoras(Integer.parseInt(txtHorasExtra.getText()));
                     empleado.setPrecioHora(Double.parseDouble(txtPrecioHora.getText()));
                     Gson gson = new Gson();
-                    String jsonString = gson.toJson(cliente);
+                    String jsonString = gson.toJson(empleado);
                     Response put = solicitud.put(Entity.json(jsonString));
                     String responseJson = put.readEntity(String.class);
 
@@ -195,12 +191,13 @@ public class frmEmpleado {
                     }
                     if (put.getStatus() == 404) {
                         RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
+                        respuesta = apiError.getErrorDetails();
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
+                    respuesta = ex.toString();
                 }
                 finally {
+                    JOptionPane.showMessageDialog(null, respuesta);
                     client.close();
                 }
             }
@@ -266,10 +263,11 @@ public class frmEmpleado {
                                     empleado.getNombre(),
                                     empleado.getDni(),
                                     empleado.getSueldo(),
+                                    empleado.getSucursal(),
                                     empleado.getFechaIngreso(),
                                     empleado.getGenero(),
                                     empleado.getEdad(),
-                                    empleado.getHorasExtra(),
+                                    empleado.getHoras(),
                                     empleado.getPrecioHora()
                             };
                             modelo.addRow(registro);
@@ -310,10 +308,11 @@ public class frmEmpleado {
                                     empleado.getNombre(),
                                     empleado.getDni(),
                                     empleado.getSueldo(),
+                                    empleado.getSucursal(),
                                     empleado.getFechaIngreso(),
                                     empleado.getGenero(),
                                     empleado.getEdad(),
-                                    empleado.getHorasExtra(),
+                                    empleado.getHoras(),
                                     empleado.getPrecioHora()
                             };
                             modelo.addRow(registro);
@@ -351,6 +350,7 @@ public class frmEmpleado {
             modelo.addColumn("$");
             leerDatos();
             llenarComboEmpleado();
+            llenarComboSucursal();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.toString(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -364,8 +364,7 @@ public class frmEmpleado {
             Invocation.Builder solicitud = target.request();
             Response get = solicitud.get();
             String responseJson = get.readEntity(String.class);
-            List<Empleado> data = new Gson().fromJson(responseJson, new TypeToken<List<Empleado>>() {
-            }.getType());
+            List<Empleado> data = new Gson().fromJson(responseJson, new TypeToken<List<Empleado>>(){}.getType());
             modelo.setRowCount(0);
             for (Empleado empleado : data) {
                 Object[] registro = {
@@ -373,10 +372,11 @@ public class frmEmpleado {
                         empleado.getNombre(),
                         empleado.getDni(),
                         empleado.getSueldo(),
+                        empleado.getSucursal(),
                         empleado.getFechaIngreso(),
                         empleado.getGenero(),
                         empleado.getEdad(),
-                        empleado.getHorasExtra(),
+                        empleado.getHoras(),
                         empleado.getPrecioHora()
                 };
                 modelo.addRow(registro);
@@ -386,7 +386,29 @@ public class frmEmpleado {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
     }
-
+    private void llenarComboSucursal() {
+        try {
+            Client client = ClientBuilder.newClient();
+            WebTarget target = client.target(URL2 + "");
+            Invocation.Builder solicitud = target.request();
+            Response get = solicitud.get();
+            String responseJson = get.readEntity(String.class);
+            List<Sucursal> data = new Gson().fromJson(responseJson, new TypeToken<List<Sucursal>>() {
+            }.getType());
+            if (get.getStatus() == 200) {
+                DefaultComboBoxModel Combo = new DefaultComboBoxModel();
+                for (Sucursal sucursal : data) {
+                    Combo.addElement(sucursal.getNombre());
+                }
+                cboSucursal.setModel(Combo);
+            } else {
+                throw new Exception("Error: no se cargaron los datos.");
+            }
+            client.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     private void llenarComboEmpleado() {
         try {
             Client client = ClientBuilder.newClient();
@@ -445,6 +467,7 @@ public class frmEmpleado {
 
     //String URL = "http://192.168.108.214:8080/api/v1/empleados";
     static final String URL = "http://192.168.1.12:8080/api/v1/empleados";
+    static final String URL2 = "http://192.168.1.12:8080/api/v1/sucursales";
     String respuesta = "";
     public static void main() {
         JFrame frame = new JFrame("Empleado");
