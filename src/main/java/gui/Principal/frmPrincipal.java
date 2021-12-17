@@ -82,6 +82,18 @@ public class frmPrincipal {
                 frmEmpleado.main();
             }
         });
+        btnReservacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmReservaciones.main();
+            }
+        });
+        btnSucursal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmSucursal.main();
+            }
+        });
     }
 
     private void iniciar() {
