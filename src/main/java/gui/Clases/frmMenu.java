@@ -423,7 +423,7 @@ public class frmMenu {
     static final String URL = "http://192.168.1.12:8080/api/v1/menu";
     //static final String URL = "http://192.168.108.214:8080/api/v1/menu";
     public static void main() {
-        JFrame frame = new JFrame("Menu");
+        JFrame frame = new JFrame("Menú");
         frame.setContentPane(new frmMenu().jpaPrincipal);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

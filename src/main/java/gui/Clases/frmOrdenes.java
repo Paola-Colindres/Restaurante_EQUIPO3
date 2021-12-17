@@ -65,40 +65,41 @@ public class frmOrdenes {
             public void actionPerformed(ActionEvent e) {
                 Client cliente = ClientBuilder.newClient();
                 try {
-                    if (txtPrecioTotal.getText().equals("")) {
-                        throw new Exception("El Precio no esta calculado");
-                    }
-                    WebTarget target = cliente.target(URL + "/addOrden");
-                    Invocation.Builder solicitud = target.request();
-                    Orden orden = new Orden();
-                    orden.setPlato(cboPlato.getSelectedItem().toString());
-                    orden.setBebida(cboBebida.getSelectedItem().toString());
-                    orden.setExtra(txtExtra.getText());
-                    orden.setComplemento(cboComplemento.getSelectedItem().toString());
-                    orden.setCantidad(Integer.parseInt(txtCantidad.getText()));
-                    orden.setPostre(cboPostre.getSelectedItem().toString());
-                    orden.setPrecioTotal(Double.parseDouble(txtPrecioTotal.getText()));
-                    Gson gson = new Gson();
-                    String jsonString = gson.toJson(orden);
-                    Response post = solicitud.post(Entity.json(jsonString));
-                    String responseJson = post.readEntity(String.class);
+                    if (txtPrecioTotal.getText().isEmpty()) {
+                        respuesta = "El Precio no esta calculado";
+                    } else {
 
-                    switch (post.getStatus()) {
-                        case 201:
-                            respuesta = "Guardado";
-                            leerDatos();
-                            llenarComboOrden();
-                            limpiar();
-                            break;
-                        case 500:
-                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                            respuesta = apiError.getErrorDetails();
-                            break;
-                        default:
-                            respuesta = "Error";
-                            break;
-                    }
+                        WebTarget target = cliente.target(URL + "/addOrden");
+                        Invocation.Builder solicitud = target.request();
+                        Orden orden = new Orden();
+                        orden.setPlato(cboPlato.getSelectedItem().toString());
+                        orden.setBebida(cboBebida.getSelectedItem().toString());
+                        orden.setExtra(txtExtra.getText());
+                        orden.setComplemento(cboComplemento.getSelectedItem().toString());
+                        orden.setCantidad(Integer.parseInt(txtCantidad.getText()));
+                        orden.setPostre(cboPostre.getSelectedItem().toString());
+                        orden.setPrecioTotal(Double.parseDouble(txtPrecioTotal.getText()));
+                        Gson gson = new Gson();
+                        String jsonString = gson.toJson(orden);
+                        Response post = solicitud.post(Entity.json(jsonString));
+                        String responseJson = post.readEntity(String.class);
 
+                        switch (post.getStatus()) {
+                            case 201:
+                                respuesta = "Guardado";
+                                leerDatos();
+                                llenarComboOrden();
+                                limpiar();
+                                break;
+                            case 500:
+                                RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                                respuesta = apiError.getErrorDetails();
+                                break;
+                            default:
+                                respuesta = "Error";
+                                break;
+                        }
+                    }
                 } catch (Exception ex) {
                     respuesta = e.toString();
                 }
@@ -118,6 +119,7 @@ public class frmOrdenes {
                     Orden orden = new Orden();
                     String id;
                     id = JOptionPane.showInputDialog("¿Cual es su ID?");
+                    calcular();
                     orden.setId(Long.parseLong(id));
                     orden.setPlato(cboPlato.getSelectedItem().toString());
                     orden.setBebida(cboBebida.getSelectedItem().toString());
@@ -326,45 +328,7 @@ public class frmOrdenes {
         btnCalcular.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    if (Integer.parseInt(txtCantidad.getText()) <= 0) {
-                        throw new Exception("La cantidad no debe ser <= 0");
-                    }
-                    double precio;
-                    double precioPlato=0;
-                    double precioBebida=0;
-                    double precioPostre=0;
-                    double precioExtra=0;
-                    Client cliente = ClientBuilder.newClient();
-                    WebTarget target = cliente.target(URL2 + "");
-                    Invocation.Builder solicitud = target.request();
-                    Response get = solicitud.get();
-                    String responseJson = get.readEntity(String.class);
-                    List<Menu> data = new Gson().fromJson(responseJson, new TypeToken<List<Menu>>(){}.getType());
-                    for (Menu menu: data) {
-                        if (menu.getProducto().equals(cboPlato.getSelectedItem())) {
-                            precioPlato = menu.getPrecio();
-                        }
-                        if (menu.getProducto().equals(cboBebida.getSelectedItem())) {
-                            precioBebida = menu.getPrecio();
-                        }
-                        if (menu.getProducto().equals(cboPostre.getSelectedItem())) {
-                            precioPostre = menu.getPrecio();
-                        }
-                    }
-                    if (!txtExtra.getText().toLowerCase().equals("ninguno")) {
-                        precioExtra = 10;
-                    }
-                    precio = precioPlato + precioBebida + precioPostre;
-                    //if (!cboComplemento.getSelectedItem().equals("Ninguno")) {
-                    //    precio =+ 10;
-                    //}
-                    double precioTotal = (precio * Integer.parseInt(txtCantidad.getText())) + precioExtra;
-                    txtPrecioTotal.setText(String.valueOf(precioTotal));
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString());
-                }
+                calcular();
             }
         });
     }
@@ -517,6 +481,49 @@ public class frmOrdenes {
         }
     }
 
+    private void calcular() {
+        try {
+            if (txtCantidad.getText().isEmpty())
+                throw new Exception("La cantidad esta vacia");
+            if (Integer.parseInt(txtCantidad.getText()) <= 0)
+                throw new Exception("La cantidad no debe ser <= 0");
+            double precio;
+            double precioPlato=0;
+            double precioBebida=0;
+            double precioPostre=0;
+            double precioExtra=0;
+            Client cliente = ClientBuilder.newClient();
+            WebTarget target = cliente.target(URL2 + "");
+            Invocation.Builder solicitud = target.request();
+            Response get = solicitud.get();
+            String responseJson = get.readEntity(String.class);
+            List<Menu> data = new Gson().fromJson(responseJson, new TypeToken<List<Menu>>(){}.getType());
+            for (Menu menu: data) {
+                if (menu.getProducto().equals(cboPlato.getSelectedItem())) {
+                    precioPlato = menu.getPrecio();
+                }
+                if (menu.getProducto().equals(cboBebida.getSelectedItem())) {
+                    precioBebida = menu.getPrecio();
+                }
+                if (menu.getProducto().equals(cboPostre.getSelectedItem())) {
+                    precioPostre = menu.getPrecio();
+                }
+            }
+            if (!txtExtra.getText().toLowerCase().equals("ninguno")) {
+                precioExtra = 10;
+            }
+            precio = precioPlato + precioBebida + precioPostre;
+            //if (!cboComplemento.getSelectedItem().equals("Ninguno")) {
+            //    precio =+ 10;
+            //}
+            double precioTotal = (precio * Integer.parseInt(txtCantidad.getText())) + precioExtra;
+            txtPrecioTotal.setText(String.valueOf(precioTotal));
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+        }
+    }
+
     private void limpiar() {
         txtID.setText("");
         txtExtra.setText("");
@@ -551,7 +558,7 @@ public class frmOrdenes {
     //static final String URL = "http://192.168.108.214:8080/api/v1/ordenes";
     //static final String URL2 = "http://192.168.108.214:8080/api/v1/menu";
     public static void main() {
-        JFrame frame = new JFrame("Ordenes");
+        JFrame frame = new JFrame("Órdenes");
         frame.setContentPane(new frmOrdenes().jpaPrincipal);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

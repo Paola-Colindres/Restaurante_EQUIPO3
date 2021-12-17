@@ -54,6 +54,8 @@ public class frmLogin {
                         if (txtContraseña.getText().equals(String.valueOf(data.getContrasena()))) {
                             frmPrincipal.main();
                         }
+                        else
+                            throw new Exception("Nombre de usuario o contraseña incorrectos");
                     }
                     else
                         throw new Exception("Nombre de usuario o contraseña incorrectos");

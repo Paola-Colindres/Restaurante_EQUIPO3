@@ -61,37 +61,41 @@ public class frmFactura {
             public void actionPerformed(ActionEvent e) {
                 Client cliente = ClientBuilder.newClient();
                 try {
-                    WebTarget target = cliente.target(URL + "/addFactura");
-                    Invocation.Builder solicitud = target.request();
-                    Factura factura = new Factura();
-                    factura.setCliente(cboCliente.getSelectedItem().toString());
-                    factura.setEmpleado(cboEmpleado.getSelectedItem().toString());
-                    factura.setOrden(cboOrden.getSelectedItem().toString());
-                    factura.setFecha(txtFecha.getText());
-                    factura.setCantidadOrden(Integer.parseInt(txtCantOrden.getText()));
-                    factura.setTipoPago(txtTipoPago.getText());
-                    factura.setTotalPagar(Double.parseDouble(txtTotalPagar.getText()));
-                    Gson gson = new Gson();
-                    String jsonString = gson.toJson(factura);
-                    Response post = solicitud.post(Entity.json(jsonString));
-                    String responseJson = post.readEntity(String.class);
-
-                    switch (post.getStatus()) {
-                        case 201:
-                            respuesta = "Guardado";
-                            leerDatos();
-                            llenarComboFactura();
-                            limpiar();
-                            break;
-                        case 500:
-                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                            respuesta = apiError.getErrorDetails();
-                            break;
-                        default:
-                            respuesta = "Error";
-                            break;
+                    if (txtTotalPagar.getText().isEmpty()) {
+                        respuesta = "El Total a Pagar no ha sido calculado";
                     }
+                    else {
+                        WebTarget target = cliente.target(URL + "/addFactura");
+                        Invocation.Builder solicitud = target.request();
+                        Factura factura = new Factura();
+                        factura.setCliente(cboCliente.getSelectedItem().toString());
+                        factura.setEmpleado(cboEmpleado.getSelectedItem().toString());
+                        factura.setOrden(cboOrden.getSelectedItem().toString());
+                        factura.setFecha(txtFecha.getText());
+                        factura.setCantidadOrden(Integer.parseInt(txtCantOrden.getText()));
+                        factura.setTipoPago(txtTipoPago.getText());
+                        factura.setTotalPagar(Double.parseDouble(txtTotalPagar.getText()));
+                        Gson gson = new Gson();
+                        String jsonString = gson.toJson(factura);
+                        Response post = solicitud.post(Entity.json(jsonString));
+                        String responseJson = post.readEntity(String.class);
 
+                        switch (post.getStatus()) {
+                            case 201:
+                                respuesta = "Guardado";
+                                leerDatos();
+                                llenarComboFactura();
+                                limpiar();
+                                break;
+                            case 500:
+                                RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                                respuesta = apiError.getErrorDetails();
+                                break;
+                            default:
+                                respuesta = "Error";
+                                break;
+                        }
+                    }
                 } catch (Exception ex) {
                     respuesta = e.toString();
                 }
@@ -111,6 +115,7 @@ public class frmFactura {
                     Factura factura = new Factura();
                     String id;
                     id = JOptionPane.showInputDialog("¿Cual es su ID?");
+                    calcular();
                     factura.setId(Long.parseLong(id));
                     factura.setCliente(cboCliente.getSelectedItem().toString());
                     factura.setEmpleado(cboEmpleado.getSelectedItem().toString());
@@ -319,33 +324,7 @@ public class frmFactura {
         btnCalcular.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    if (Integer.parseInt(txtCantOrden.getText()) <= 0)
-                        throw new Exception("La cantidad de orden no debe ser <= 0");
-                    Client cliente = ClientBuilder.newClient();
-                    String plato = cboOrden.getSelectedItem().toString();
-                    WebTarget target = cliente.target(URL4 + "/plato/" + plato);
-                    Invocation.Builder solicitud = target.request();
-                    Response get = solicitud.get();
-                    String responseJson = get.readEntity(String.class);
-                    Orden data = new Gson().fromJson(responseJson, Orden.class);
-                    switch (get.getStatus()) {
-                        case 200:
-                            double totalPagar = data.getPrecioTotal() * Integer.parseInt(txtCantOrden.getText());
-                            txtTotalPagar.setText(String.valueOf(totalPagar));
-                            break;
-                        default:
-                            respuesta = "Error";
-                            break;
-                    }
-                    if (get.getStatus() == 404) {
-                        RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
-                    }
-                    cliente.close();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                calcular();
             }
         });
     }
@@ -492,6 +471,37 @@ public class frmFactura {
         }
     }
 
+    private void calcular() {
+        try {
+            if (txtCantOrden.getText().isEmpty())
+                throw new Exception("La cantidad de orden esta vacia");
+            if (Integer.parseInt(txtCantOrden.getText()) <= 0)
+                throw new Exception("La cantidad de orden no debe ser <= 0");
+            Client cliente = ClientBuilder.newClient();
+            String plato = cboOrden.getSelectedItem().toString();
+            WebTarget target = cliente.target(URL4 + "/plato/" + plato);
+            Invocation.Builder solicitud = target.request();
+            Response get = solicitud.get();
+            String responseJson = get.readEntity(String.class);
+            Orden data = new Gson().fromJson(responseJson, Orden.class);
+            switch (get.getStatus()) {
+                case 200:
+                    double totalPagar = data.getPrecioTotal() * Integer.parseInt(txtCantOrden.getText());
+                    txtTotalPagar.setText(String.valueOf(totalPagar));
+                    break;
+                default:
+                    respuesta = "Error";
+                    break;
+            }
+            if (get.getStatus() == 404) {
+                RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                throw new Exception(apiError.getErrorDetails());
+            }
+            cliente.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void limpiar() {
         txtID.setText("");
