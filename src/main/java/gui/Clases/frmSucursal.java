@@ -31,7 +31,7 @@ public class frmSucursal {
     private JLabel lblSucursal;
     private JComboBox cboSucursal;
     private JTextField txtGastosEnergia;
-    private JTextField txtTamaño;
+    private JTextField txtCantidadClientes;
     private JTextField txtHoraCierre;
     private JTextField txtHoraAbre;
     private JTextField txtCantidadEmpleados;
@@ -67,7 +67,7 @@ public class frmSucursal {
                     sucursal.setCantidadEmpleados(Integer.parseInt(txtCantidadEmpleados.getText()));
                     sucursal.setDireccion(txtDireccion.getText());
                     sucursal.setFechaInicio(txtFechaInicio.getText());
-                    sucursal.setCantidadClientes(Integer.parseInt(txtCantidadEmpleados.getText()));
+                    sucursal.setCantidadClientes(Integer.parseInt(txtCantidadClientes.getText()));
                     sucursal.setConsumoEnergia(Double.parseDouble(txtGastosEnergia.getText()));
                     sucursal.setHoraAbre(txtHoraAbre.getText());
                     sucursal.setHoraCierre(txtHoraCierre.getText());
@@ -116,7 +116,7 @@ public class frmSucursal {
                     sucursal.setCantidadEmpleados(Integer.parseInt(txtCantidadEmpleados.getText()));
                     sucursal.setDireccion(txtDireccion.getText());
                     sucursal.setFechaInicio(txtFechaInicio.getText());
-                    sucursal.setCantidadClientes(Integer.parseInt(txtCantidadEmpleados.getText()));
+                    sucursal.setCantidadClientes(Integer.parseInt(txtCantidadClientes.getText()));
                     sucursal.setConsumoEnergia(Double.parseDouble(txtGastosEnergia.getText()));
                     sucursal.setHoraAbre(txtHoraAbre.getText());
                     sucursal.setHoraCierre(txtHoraCierre.getText());
@@ -133,12 +133,13 @@ public class frmSucursal {
                             limpiar();
                             break;
                         default:
-                            respuesta = "Error";
+                            RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
+                            respuesta = apiError.getErrorDetails();
                             break;
                     }
                     if (put.getStatus() == 404) {
                         RestApiError apiError = new Gson().fromJson(responseJson, RestApiError.class);
-                        throw new Exception(apiError.getErrorDetails());
+                        respuesta = apiError.getErrorDetails();
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, ex.toString());
@@ -317,7 +318,7 @@ public class frmSucursal {
                 txtCantidadEmpleados.setText(modelo.getValueAt(filaSeleccionada, 2).toString());
                 txtDireccion.setText(modelo.getValueAt(filaSeleccionada, 3).toString());
                 txtFechaInicio.setText(modelo.getValueAt(filaSeleccionada, 4).toString());
-                txtCantidadEmpleados.setText(modelo.getValueAt(filaSeleccionada, 5).toString());
+                txtCantidadClientes.setText(modelo.getValueAt(filaSeleccionada, 5).toString());
                 txtGastosEnergia.setText(modelo.getValueAt(filaSeleccionada, 6).toString());
                 txtHoraAbre.setText(modelo.getValueAt(filaSeleccionada, 7).toString());
                 txtHoraCierre.setText(modelo.getValueAt(filaSeleccionada, 8).toString());
@@ -400,7 +401,7 @@ public class frmSucursal {
         txtCantidadEmpleados.setText("");
         txtDireccion.setText("");
         txtFechaInicio.setText("");
-        txtCantidadEmpleados.setText("");
+        txtCantidadClientes.setText("");
         txtGastosEnergia.setText("");
         txtHoraAbre.setText("");
         txtHoraCierre.setText("");
