@@ -79,19 +79,19 @@ public class frmPrincipal {
         btnEmpleado.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmEmpleado.main();
+                //frmEmpleado.main();
             }
         });
         btnReservacion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmReservaciones.main();
+                //frmReservaciones.main();
             }
         });
         btnSucursal.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmSucursal.main();
+                //frmSucursal.main();
             }
         });
     }

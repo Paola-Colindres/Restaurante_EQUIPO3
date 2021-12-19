@@ -466,10 +466,10 @@ public class frmEmpleado {
     }
 
     //String URL = "http://192.168.108.214:8080/api/v1/empleados";
-    static final String URL = "http://192.168.1.12:8080/api/v1/empleados";
-    static final String URL2 = "http://192.168.1.12:8080/api/v1/sucursales";
+    static final String URL = "http://192.168.1.55:8080/api/v1/empleados";
+    static final String URL2 = "http://192.168.1.55:8080/api/v1/sucursales";
     String respuesta = "";
-    public static void main() {
+    public static void main(String[] args) {
         JFrame frame = new JFrame("Empleado");
         frame.setResizable(false);
         frame.setContentPane(new frmEmpleado().jpaPrincipal);

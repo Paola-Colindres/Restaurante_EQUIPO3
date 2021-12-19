@@ -63,7 +63,7 @@ public class frmReservaciones {
             public void actionPerformed(ActionEvent e) {
                 Client client = ClientBuilder.newClient();
                 try {
-                    WebTarget target = client.target(URL + "/addReservacion");
+                    WebTarget target = client.target(URL + "/reservaciones/addReservacion");
                     Invocation.Builder solicitud = target.request();
                     Reservaciones reservacion = new Reservaciones();
                     reservacion.setCliente(cboCliente.getSelectedItem().toString());
@@ -122,7 +122,7 @@ public class frmReservaciones {
             public void actionPerformed(ActionEvent e) {
                 Client client = ClientBuilder.newClient();
                 try {
-                    WebTarget target = client.target(URL + "");
+                    WebTarget target = client.target(URL + "/reservaciones");
                     Invocation.Builder solicitud = target.request();
                     Reservaciones reservacion = new Reservaciones();
                     String id;
@@ -171,7 +171,7 @@ public class frmReservaciones {
                 try {
                     String id;
                     id = JOptionPane.showInputDialog("¿Cual es su ID?");
-                    WebTarget target = client.target(URL + "/delete/" + id);
+                    WebTarget target = client.target(URL + "/reservaciones/delete/" + id);
                     Invocation.Builder solicitud = target.request();
                     Response delete = solicitud.delete();
                     String responseJson = delete.readEntity(String.class);
@@ -211,7 +211,7 @@ public class frmReservaciones {
                 try {
                     String nombre;
                     nombre = cboReservacion.getSelectedItem().toString();
-                    WebTarget target = client.target(URL + "/nombre/" + nombre);
+                    WebTarget target = client.target(URL + "/reservaciones/nombre/" + nombre);
                     Invocation.Builder solicitud = target.request();
                     Response get = solicitud.get();
                     String responseJson = get.readEntity(String.class);
@@ -240,7 +240,7 @@ public class frmReservaciones {
                     Client client = ClientBuilder.newClient();
                     String id;
                     id = JOptionPane.showInputDialog("¿Cual es su ID?");
-                    WebTarget target = client.target(URL + "/id/" + id);
+                    WebTarget target = client.target(URL + "/reservaciones/id/" + id);
                     Invocation.Builder solicitud = target.request();
                     Response get = solicitud.get();
                     String responseJson = get.readEntity(String.class);
@@ -283,7 +283,7 @@ public class frmReservaciones {
                     Client client = ClientBuilder.newClient();
                     //String cliente;
                     //cliente = JOptionPane.showInputDialog("¿Cual es el nombre del cliente?");
-                    WebTarget target = client.target(URL + "/id/" + cboCliente.getToolTipText());
+                    WebTarget target = client.target(URL + "/reservaciones/cliente/" + cboCliente.getToolTipText());
                     Invocation.Builder solicitud = target.request();
                     Response get = solicitud.get();
                     String responseJson = get.readEntity(String.class);
@@ -326,7 +326,7 @@ public class frmReservaciones {
                     Client client = ClientBuilder.newClient();
                     //String cliente;
                     //cliente = JOptionPane.showInputDialog("¿Cual es el nombre del cliente?");
-                    WebTarget target = client.target(URL + "/id/" + cboSucursal.getToolTipText());
+                    WebTarget target = client.target(URL + "/reservaciones/sucursal/" + cboSucursal.getToolTipText());
                     Invocation.Builder solicitud = target.request();
                     Response get = solicitud.get();
                     String responseJson = get.readEntity(String.class);
@@ -367,7 +367,7 @@ public class frmReservaciones {
     private void llenarComboSucursal() {
         try {
             Client client = ClientBuilder.newClient();
-            WebTarget target = client.target(URL + "");
+            WebTarget target = client.target(URL + "/sucursales");
             Invocation.Builder solicitud = target.request();
             Response get = solicitud.get();
             String responseJson = get.readEntity(String.class);
@@ -389,7 +389,7 @@ public class frmReservaciones {
     private void llenarComboCliente() {
         try {
             Client client = ClientBuilder.newClient();
-            WebTarget target = client.target(URL + "");
+            WebTarget target = client.target(URL + "/reservaciones");
             Invocation.Builder solicitud = target.request();
             Response get = solicitud.get();
             String responseJson = get.readEntity(String.class);
@@ -429,7 +429,7 @@ public class frmReservaciones {
     private void leerDatos() {
         try {
             Client client = ClientBuilder.newClient();
-            WebTarget target = client.target(URL + "");
+            WebTarget target = client.target(URL + "/reservaciones");
             Invocation.Builder solicitud = target.request();
             Response get = solicitud.get();
             String responseJson = get.readEntity(String.class);
@@ -456,7 +456,7 @@ public class frmReservaciones {
     private void llenarComboReservacion() {
         try {
             Client client = ClientBuilder.newClient();
-            WebTarget target = client.target(URL + "");
+            WebTarget target = client.target(URL + "/reservaciones");
             Invocation.Builder solicitud = target.request();
             Response get = solicitud.get();
             String responseJson = get.readEntity(String.class);
@@ -507,9 +507,9 @@ public class frmReservaciones {
         btnBuscarSucursal.setIcon(imagen7);
     }
 
-    //String URL = "http://192.168.1.55:8080/api/v1/reservaciones";
+    String URL = "http://192.168.1.55:8080/api/v1";
     String respuesta="";
-    static final String URL  = "http://192.168.1.12:8080/api/v1/reservaciones";
+    //static final String URL  = "http://192.168.1.12:8080/api/v1/reservaciones";
     public static void main(/*String[] args*/) {
         JFrame frame = new JFrame("Reservaciones");
         frame.setResizable(false);

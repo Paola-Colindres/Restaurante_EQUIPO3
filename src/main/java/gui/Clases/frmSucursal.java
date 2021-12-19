@@ -66,7 +66,7 @@ public class frmSucursal {
                     sucursal.setNombre(txtNombre.getText());
                     sucursal.setCantidadEmpleados(Integer.parseInt(txtCantidadEmpleados.getText()));
                     sucursal.setDireccion(txtDireccion.getText());
-                    sucursal.setFechaInicio(txtFechaInicio.getText());
+                    sucursal.setFechaInicio(txtFechaInicio.toString());
                     sucursal.setCantidadClientes(Integer.parseInt(txtCantidadClientes.getText()));
                     sucursal.setConsumoEnergia(Double.parseDouble(txtGastosEnergia.getText()));
                     sucursal.setHoraAbre(txtHoraAbre.getText());
@@ -426,9 +426,9 @@ public class frmSucursal {
         btnBuscarNombre.setIcon(imagen7);
     }
 
-    //String URL = "http://192.168.1.55:8080/api/v1/sucursales";
+    String URL = "http://192.168.1.55:8080/api/v1/sucursales";
     String respuesta="";
-    static final String URL  = "http://192.168.1.12:8080/api/v1/sucursales";
+    //static final String URL  = "http://192.168.1.12:8080/api/v1/sucursales";
     public static void main(/*String[] args*/) {
         JFrame frame = new JFrame("Sucursal");
         frame.setResizable(false);
